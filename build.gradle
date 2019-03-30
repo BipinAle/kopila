@@ -1,0 +1,45 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.3.1'
+        
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        maven { url "https://jitpack.io" }
+        google()
+        jcenter()
+        
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    retrofitVersion = "2.4.0"
+    retrofitRxVersion = "1.0.0"
+    retrofitDependencies = [
+            retrofit         : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
+            converterGson    : "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
+            retrofitRxAdapter: "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:${retrofitRxVersion}"
+    ]
+
+    rxJavaVersion = "2.2.0"
+    rxAndroidVersion = "2.1.0"
+    rxDependencies = [
+            rxJava   : "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
+            rxAndroid: "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}"
+    ]
+}
