@@ -45,12 +45,7 @@ public class JankariSuchanaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_jankari_suchana);
         back = findViewById(R.id.back);
         title = findViewById(R.id.title);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                JankariSuchanaActivity.this.finish();
-            }
-        });
+        back.setOnClickListener(v -> JankariSuchanaActivity.this.finish());
 
         title.setText(getString(R.string.jankari_suchana));
         update = findViewById(R.id.update);
@@ -60,6 +55,9 @@ public class JankariSuchanaActivity extends AppCompatActivity {
         file = new File(getExternalFilesDir(null) + File.separator + "jankari_suchana.txt");
         progressDialog = new ProgressDialog(this);
         utils = new Utils(this);
+        update.setOnClickListener(v -> {
+            apiCall();
+        });
         apiCall();
 
     }
@@ -73,8 +71,8 @@ public class JankariSuchanaActivity extends AppCompatActivity {
         } else {
             jankariPref = getPrefData();
             if (jankariPref != null && !jankariPref.isEmpty()) {
-                Toast.makeText(JankariSuchanaActivity.this, "success retrieve", Toast.LENGTH_SHORT).show();
                 jankari = jankariPref;
+                jankariText.setText(jankari);
             } else {
                 Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
 
@@ -121,8 +119,8 @@ public class JankariSuchanaActivity extends AppCompatActivity {
                         progressDialog.hide();
                         jankariPref = getPrefData();
                         if (jankariPref != null && !jankariPref.isEmpty()) {
-                            Toast.makeText(JankariSuchanaActivity.this, "success retrieve", Toast.LENGTH_SHORT).show();
                             jankari = jankariPref;
+                            jankariText.setText(jankari);
                         } else {
                             Toast.makeText(JankariSuchanaActivity.this, getString(R.string.sth_went_wrong), Toast.LENGTH_SHORT).show();
 

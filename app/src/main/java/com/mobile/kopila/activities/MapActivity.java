@@ -66,8 +66,9 @@ public class MapActivity extends AppCompatActivity {
         } else {
             mapStringPref = getPrefData();
             if (mapStringPref != null && !mapStringPref.isEmpty()) {
-                Toast.makeText(MapActivity.this, "success retrieve", Toast.LENGTH_SHORT).show();
-                mapString = mapStringPref;
+                 mapString = mapStringPref;
+                utils.setImage(mapString, map);
+
             } else {
                 Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
 

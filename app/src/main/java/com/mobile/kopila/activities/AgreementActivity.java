@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +33,7 @@ import retrofit2.Response;
 
 public class AgreementActivity extends AppCompatActivity {
     private CheckBox checkBox;
-    private TextView goAheadText, acceptanceText;
+    private TextView acceptanceText;
     private boolean isFirstRun = true;
     ApiService apiService;
     private ProgressDialog progressDialog;
@@ -40,6 +41,7 @@ public class AgreementActivity extends AppCompatActivity {
     private Utils utils;
     private String acceptanceStringPref;
     private String acceptanceString;
+    private Button goAheadText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,7 @@ public class AgreementActivity extends AppCompatActivity {
             if (isChecked) {
                 goAheadText.setEnabled(true);
                 goAheadText.setClickable(true);
-                goAheadText.setTextColor(getResources().getColor(R.color.black));
+                goAheadText.setTextColor(getResources().getColor(R.color.white));
 
                 goAheadText.setOnClickListener(v -> {
                     startDashboard();

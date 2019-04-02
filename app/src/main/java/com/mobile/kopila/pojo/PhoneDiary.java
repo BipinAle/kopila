@@ -40,4 +40,5 @@ public class PhoneDiary {
         this.wardName = wardName;
         this.wardNumber = wardNumber;
     }
+
 }

@@ -72,7 +72,7 @@ public class PersonListAdapter extends RecyclerView.Adapter<PersonListAdapter.Pe
         }
     }
 
-    OnMessageCallListner onMessageCallListner;
+    private OnMessageCallListner onMessageCallListner;
 
     public void setOnMessageCallListner(OnMessageCallListner onMessageCallListner) {
         this.onMessageCallListner = onMessageCallListner;

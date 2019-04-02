@@ -73,6 +73,10 @@ public class PhotoGalleryActivity extends AppCompatActivity {
         utils = new Utils(this);
         photoGalleryList = new ArrayList<>();
         photGalleryPrefList = new ArrayList<>();
+        update.setOnClickListener(v -> {
+            apiCall();
+        });
+
         apiCall();
 
     }
@@ -85,8 +89,9 @@ public class PhotoGalleryActivity extends AppCompatActivity {
         } else {
             photGalleryPrefList = getPrefData();
             if (photGalleryPrefList != null && photGalleryPrefList.size() > 0) {
-                Toast.makeText(PhotoGalleryActivity.this, "success retrieve", Toast.LENGTH_SHORT).show();
                 photoGalleryList = photGalleryPrefList;
+                if (photoGalleryList.size() > 0)
+                    init();
             } else {
                 Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
 
@@ -137,8 +142,10 @@ public class PhotoGalleryActivity extends AppCompatActivity {
                         progressDialog.hide();
                         photGalleryPrefList = getPrefData();
                         if (photGalleryPrefList != null && photGalleryPrefList.size() > 0) {
-                            Toast.makeText(PhotoGalleryActivity.this, "success retrieve", Toast.LENGTH_SHORT).show();
                             photoGalleryList = photGalleryPrefList;
+                            if (photoGalleryList.size() > 0)
+                                init();
+
                         } else {
                             Toast.makeText(PhotoGalleryActivity.this, getString(R.string.sth_went_wrong), Toast.LENGTH_SHORT).show();
 

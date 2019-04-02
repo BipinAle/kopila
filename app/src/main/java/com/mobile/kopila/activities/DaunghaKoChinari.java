@@ -54,6 +54,9 @@ public class DaunghaKoChinari extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         utils = new Utils(this);
         title.setText(getString(R.string.daungha_ko_chinari));
+        update.setOnClickListener(v -> {
+            apiCall();
+        });
         apiCall();
 
     }
@@ -67,8 +70,8 @@ public class DaunghaKoChinari extends AppCompatActivity {
         } else {
             daunghaKoChinariPref = getPrefData();
             if (daunghaKoChinariPref != null && !daunghaKoChinariPref.isEmpty()) {
-                Toast.makeText(DaunghaKoChinari.this, "success retrieve", Toast.LENGTH_SHORT).show();
                 daunghaKoChinari = daunghaKoChinariPref;
+                daunghaKoChinariText.setText(daunghaKoChinari);
             } else {
                 Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
 

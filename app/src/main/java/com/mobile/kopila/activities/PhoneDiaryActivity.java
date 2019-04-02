@@ -78,6 +78,9 @@ public class PhoneDiaryActivity extends AppCompatActivity {
         toleRv.setAdapter(adapter);
         phoneDiaries = new ArrayList<>();
         phoneDiaryPref = new ArrayList<>();
+        update.setOnClickListener(v -> {
+            apiCall();
+        });
         apiCall();
 
 
@@ -91,12 +94,31 @@ public class PhoneDiaryActivity extends AppCompatActivity {
         } else {
             phoneDiaryPref = getPrefData();
             if (phoneDiaryPref != null && phoneDiaryPref.size() > 0) {
-                Toast.makeText(PhoneDiaryActivity.this, "success retrieve", Toast.LENGTH_SHORT).show();
                 phoneDiaries = phoneDiaryPref;
+                hashmapAndUpdate();
             } else {
                 Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
 
             }
+
+        }
+    }
+
+    private void hashmapAndUpdate() {
+        HashMap<String, List<PhoneDiary>> groupByNaeHashmap = groupByName(phoneDiaries);
+        if (phoneDiaries.size() > 0) {
+            //Getting keys
+            Set<String> keyProductSet = groupByNaeHashmap.keySet();
+            //Creating an ArrayList of keys
+            ArrayList<String> toleNamelist = new ArrayList<>(keyProductSet);
+
+            //Getting values
+            Collection<List<PhoneDiary>> productListValues = groupByNaeHashmap.values();
+            //Creating an ArrayList of values
+            ArrayList<List<PhoneDiary>> phoneDiariesList = new ArrayList<>(productListValues);
+
+
+            adapter.updateData(toleNamelist, phoneDiariesList);
 
         }
     }
@@ -120,22 +142,7 @@ public class PhoneDiaryActivity extends AppCompatActivity {
                                         phoneDiaries.add(new PhoneDiary(colums[0], colums[1], colums[2], colums[3], colums[4]));
                                     }
                                     saveData(phoneDiaries);//save data in pref
-                                    HashMap<String, List<PhoneDiary>> groupByNaeHashmap = groupByName(phoneDiaries);
-                                    if (phoneDiaries.size() > 0) {
-                                        //Getting keys
-                                        Set<String> keyProductSet = groupByNaeHashmap.keySet();
-                                        //Creating an ArrayList of keys
-                                        ArrayList<String> toleNamelist = new ArrayList<>(keyProductSet);
-
-                                        //Getting values
-                                        Collection<List<PhoneDiary>> productListValues = groupByNaeHashmap.values();
-                                        //Creating an ArrayList of values
-                                        ArrayList<List<PhoneDiary>> phoneDiariesList = new ArrayList<>(productListValues);
-
-
-                                        adapter.updateData(toleNamelist,phoneDiariesList);
-
-                                    }
+                                    hashmapAndUpdate();
 
                                 } catch (FileNotFoundException e) {
                                     getApiData(file, Constants.PHONE_DIARY_GID);

@@ -54,6 +54,9 @@ public class HamroBaremaActivity extends AppCompatActivity {
         file = new File(getExternalFilesDir(null) + File.separator + "hamro_barema.txt");
         progressDialog = new ProgressDialog(this);
         utils = new Utils(this);
+        update.setOnClickListener(v -> {
+            apiCall();
+        });
         apiCall();
     }
 
@@ -65,8 +68,8 @@ public class HamroBaremaActivity extends AppCompatActivity {
         } else {
             harmroBaremaPref = getPrefData();
             if (harmroBaremaPref != null && !harmroBaremaPref.isEmpty()) {
-                Toast.makeText(HamroBaremaActivity.this, "success retrieve", Toast.LENGTH_SHORT).show();
                 harmroBarema = harmroBaremaPref;
+                hamroBaremaTv.setText(harmroBarema);
             } else {
                 Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
 

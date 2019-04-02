@@ -31,8 +31,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -89,8 +91,8 @@ public class SahyogSamparkaActivity extends AppCompatActivity {
         } else {
             phoneDiaryPref = getPrefData();
             if (phoneDiaryPref != null && phoneDiaryPref.size() > 0) {
-                Toast.makeText(SahyogSamparkaActivity.this, "success retrieve", Toast.LENGTH_SHORT).show();
                 phoneDiaries = phoneDiaryPref;
+                hashmapAndUpdate();
             } else {
                 Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
 
@@ -118,8 +120,7 @@ public class SahyogSamparkaActivity extends AppCompatActivity {
                                         phoneDiaries.add(new PhoneDiary(colums[0], colums[1], colums[2], colums[3], colums[4]));
                                     }
                                     saveData(phoneDiaries);//save data in pref
-//                                    if (phoneDiaries.size() > 0)
-//                                        adapter.updateData(groupByName(phoneDiaries));
+                                    hashmapAndUpdate();
 
                                 } catch (FileNotFoundException e) {
                                     getApiData(file, Constants.SAHAYOG_SAMPARKA_GID);
@@ -139,8 +140,8 @@ public class SahyogSamparkaActivity extends AppCompatActivity {
                         progressDialog.hide();
                         phoneDiaryPref = getPrefData();
                         if (phoneDiaryPref != null && phoneDiaryPref.size() > 0) {
-                            Toast.makeText(SahyogSamparkaActivity.this, "success retrieve", Toast.LENGTH_SHORT).show();
                             phoneDiaries = phoneDiaryPref;
+                            hashmapAndUpdate();
                         } else {
                             Toast.makeText(SahyogSamparkaActivity.this, getString(R.string.sth_went_wrong), Toast.LENGTH_SHORT).show();
 
@@ -148,6 +149,25 @@ public class SahyogSamparkaActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    private void hashmapAndUpdate() {
+        HashMap<String, List<PhoneDiary>> groupByNaeHashmap = groupByName(phoneDiaries);
+        if (phoneDiaries.size() > 0) {
+            //Getting keys
+            Set<String> keyProductSet = groupByNaeHashmap.keySet();
+            //Creating an ArrayList of keys
+            ArrayList<String> toleNamelist = new ArrayList<>(keyProductSet);
+
+            //Getting values
+            Collection<List<PhoneDiary>> productListValues = groupByNaeHashmap.values();
+            //Creating an ArrayList of values
+            ArrayList<List<PhoneDiary>> phoneDiariesList = new ArrayList<>(productListValues);
+
+
+            adapter.updateData(toleNamelist, phoneDiariesList);
+
+        }
     }
 
     private void saveData(ArrayList<PhoneDiary> toleData) {
