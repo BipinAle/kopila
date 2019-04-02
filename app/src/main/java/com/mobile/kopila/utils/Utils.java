@@ -17,7 +17,7 @@ public class Utils {
 
     public void setImage(String id, ImageView imageView) {
         Glide.with(activity.getApplicationContext()).load("https://docs.google.com/uc?id=" + id)
-                .placeholder(activity.getResources().getDrawable(R.drawable.budo_ba))
+                .placeholder(activity.getResources().getDrawable(R.color.colorPrimary))
                 .centerCrop()
                 .into(imageView);
     }

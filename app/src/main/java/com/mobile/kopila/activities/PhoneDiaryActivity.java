@@ -73,7 +73,7 @@ public class PhoneDiaryActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         gson = new Gson();
         utils = new Utils(this);
-        adapter = new PhoneDiaryAdapter();
+        adapter = new PhoneDiaryAdapter(this);
         toleRv.setLayoutManager(new GridLayoutManager(this, 2));
         toleRv.setAdapter(adapter);
         phoneDiaries = new ArrayList<>();
@@ -162,8 +162,8 @@ public class PhoneDiaryActivity extends AppCompatActivity {
                         progressDialog.hide();
                         phoneDiaryPref = getPrefData();
                         if (phoneDiaryPref != null && phoneDiaryPref.size() > 0) {
-                            Toast.makeText(PhoneDiaryActivity.this, "success retrieve", Toast.LENGTH_SHORT).show();
                             phoneDiaries = phoneDiaryPref;
+                            hashmapAndUpdate();
                         } else {
                             Toast.makeText(PhoneDiaryActivity.this, getString(R.string.sth_went_wrong), Toast.LENGTH_SHORT).show();
 

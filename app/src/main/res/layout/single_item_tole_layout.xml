@@ -4,12 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="150dp"
     android:layout_margin="8dp"
-    android:background="#ffffff"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:cardBackgroundColor="@color/colorPrimary"
         app:cardCornerRadius="4dp">
 
         <TextView
@@ -18,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="टोल"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="20dp" />
     </android.support.v7.widget.CardView>
 

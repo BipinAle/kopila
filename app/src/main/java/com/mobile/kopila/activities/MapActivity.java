@@ -55,6 +55,10 @@ public class MapActivity extends AppCompatActivity {
         file = new File(getExternalFilesDir(null) + File.separator + "map.txt");
         progressDialog = new ProgressDialog(this);
         utils = new Utils(this);
+        update.setOnClickListener(v -> {
+            apiCall();
+        });
+
         apiCall();
     }
 
@@ -66,7 +70,7 @@ public class MapActivity extends AppCompatActivity {
         } else {
             mapStringPref = getPrefData();
             if (mapStringPref != null && !mapStringPref.isEmpty()) {
-                 mapString = mapStringPref;
+                mapString = mapStringPref;
                 utils.setImage(mapString, map);
 
             } else {

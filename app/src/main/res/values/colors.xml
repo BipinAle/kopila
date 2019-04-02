@@ -7,4 +7,22 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="disable">#cccccc</color>
+    <color name="color1">#e74c3c</color>
+    <color name="color2">#e67e22</color>
+    <color name="color3">#f1c40f</color>
+    <color name="color4">#2ecc71</color>
+    <color name="color5">#3498db</color>
+    <color name="color6">#34495e</color>
+    <color name="color7">#1abc9c</color>
+
+    <array name="cardcolor">
+        <item>@color/color3</item>
+        <item>@color/color1</item>
+        <item>@color/color5</item>
+        <item>@color/color7</item>
+        <item>@color/color2</item>
+        <item>@color/color4</item>
+        <item>@color/color6</item>
+
+    </array>
 </resources>

@@ -78,7 +78,7 @@
                     android:layout_marginRight="12dp"
                     android:layout_weight="1"
                     android:elevation="5dp"
-                    app:cardBackgroundColor="#f00"
+                    app:cardBackgroundColor="@color/color1"
                     app:cardCornerRadius="8dp">
 
                     <RelativeLayout
@@ -88,17 +88,23 @@
 
 
                         <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop" />
+                            android:layout_width="65dp"
+                            android:layout_height="60dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerInParent="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="12dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/gallery_icon" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:gravity="center"
+                            android:gravity="bottom|center_horizontal"
+                            android:paddingBottom="8dp"
                             android:text="@string/hamro_barema"
                             android:textColor="@color/white"
-                            android:textSize="20dp" />
+                            android:textSize="14dp" />
                     </RelativeLayout>
 
 
@@ -111,7 +117,7 @@
                     android:layout_marginRight="12dp"
                     android:layout_weight="1"
                     android:elevation="5dp"
-                    app:cardBackgroundColor="#0f0"
+                    app:cardBackgroundColor="@color/color2"
                     app:cardCornerRadius="8dp">
 
                     <RelativeLayout
@@ -119,17 +125,23 @@
                         android:layout_height="match_parent">
 
                         <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop" />
+                            android:layout_width="65dp"
+                            android:layout_height="60dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerInParent="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="12dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/gallery_icon" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:gravity="center"
+                            android:gravity="bottom|center_horizontal"
+                            android:paddingBottom="8dp"
                             android:text="@string/daungha_ko_chinari"
                             android:textColor="@color/white"
-                            android:textSize="20dp" />
+                            android:textSize="14dp" />
                     </RelativeLayout>
 
                 </android.support.v7.widget.CardView>
@@ -140,7 +152,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:elevation="5dp"
-                    app:cardBackgroundColor="#00f"
+                    app:cardBackgroundColor="@color/color3"
                     app:cardCornerRadius="8dp">
 
                     <RelativeLayout
@@ -148,18 +160,23 @@
                         android:layout_height="match_parent">
 
                         <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop" />
+                            android:layout_width="65dp"
+                            android:layout_height="60dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerInParent="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="12dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/gallery_icon" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_centerInParent="true"
-                            android:gravity="center"
+                            android:gravity="bottom|center_horizontal"
+                            android:paddingBottom="8dp"
                             android:text="@string/phone_diary"
                             android:textColor="@color/white"
-                            android:textSize="20dp" />
+                            android:textSize="14dp" />
                     </RelativeLayout>
 
                 </android.support.v7.widget.CardView>
@@ -178,7 +195,7 @@
                     android:layout_marginRight="12dp"
                     android:layout_weight="1"
                     android:elevation="5dp"
-                    app:cardBackgroundColor="#ff0"
+                    app:cardBackgroundColor="@color/color4"
                     app:cardCornerRadius="8dp">
 
                     <RelativeLayout
@@ -186,18 +203,23 @@
                         android:layout_height="match_parent">
 
                         <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop" />
+                            android:layout_width="65dp"
+                            android:layout_height="60dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerInParent="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="12dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/gallery_icon" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_centerInParent="true"
-                            android:gravity="center"
+                            android:gravity="bottom|center_horizontal"
+                            android:paddingBottom="8dp"
                             android:text="@string/jankari_suchana"
                             android:textColor="@color/white"
-                            android:textSize="20dp" />
+                            android:textSize="14dp" />
                     </RelativeLayout>
 
                 </android.support.v7.widget.CardView>
@@ -209,7 +231,7 @@
                     android:layout_marginRight="12dp"
                     android:layout_weight="1"
                     android:elevation="5dp"
-                    app:cardBackgroundColor="#f0f"
+                    app:cardBackgroundColor="@color/color5"
                     app:cardCornerRadius="8dp">
 
                     <RelativeLayout
@@ -217,18 +239,23 @@
                         android:layout_height="match_parent">
 
                         <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop" />
+                            android:layout_width="65dp"
+                            android:layout_height="60dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerInParent="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="12dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/gallery_icon" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_centerInParent="true"
-                            android:gravity="center"
+                            android:gravity="bottom|center_horizontal"
+                            android:paddingBottom="8dp"
                             android:text="@string/photo_gallery"
                             android:textColor="@color/white"
-                            android:textSize="20dp" />
+                            android:textSize="14dp" />
                     </RelativeLayout>
 
                 </android.support.v7.widget.CardView>
@@ -239,7 +266,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:elevation="5dp"
-                    app:cardBackgroundColor="#0ff"
+                    app:cardBackgroundColor="@color/color6"
                     app:cardCornerRadius="8dp">
 
                     <RelativeLayout
@@ -247,18 +274,23 @@
                         android:layout_height="match_parent">
 
                         <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop" />
+                            android:layout_width="65dp"
+                            android:layout_height="60dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerInParent="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="12dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/gallery_icon" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_centerInParent="true"
-                            android:gravity="center"
+                            android:gravity="bottom|center_horizontal"
+                            android:paddingBottom="8dp"
                             android:text="@string/sahayog_samparka"
                             android:textColor="@color/white"
-                            android:textSize="20dp" />
+                            android:textSize="14dp" />
                     </RelativeLayout>
 
                 </android.support.v7.widget.CardView>
@@ -277,7 +309,7 @@
                     android:layout_marginRight="12dp"
                     android:layout_weight="1"
                     android:elevation="5dp"
-                    app:cardBackgroundColor="#08f"
+                    app:cardBackgroundColor="@color/color7"
                     app:cardCornerRadius="8dp">
 
                     <RelativeLayout
@@ -285,18 +317,23 @@
                         android:layout_height="match_parent">
 
                         <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop" />
+                            android:layout_width="65dp"
+                            android:layout_height="60dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerInParent="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="12dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/map" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_centerInParent="true"
-                            android:gravity="center"
+                            android:gravity="bottom|center_horizontal"
+                            android:paddingBottom="8dp"
                             android:text="@string/map"
                             android:textColor="@color/white"
-                            android:textSize="20dp" />
+                            android:textSize="14dp" />
                     </RelativeLayout>
 
                 </android.support.v7.widget.CardView>
@@ -346,7 +383,7 @@
                             android:gravity="center"
                             android:text="@string/hamro_barema"
                             android:textColor="@color/white"
-                            android:textSize="20dp" />
+                            android:textSize="14dp" />
                     </RelativeLayout>
 
                 </android.support.v7.widget.CardView>

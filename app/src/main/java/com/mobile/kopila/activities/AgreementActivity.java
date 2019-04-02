@@ -34,7 +34,6 @@ import retrofit2.Response;
 public class AgreementActivity extends AppCompatActivity {
     private CheckBox checkBox;
     private TextView acceptanceText;
-    private boolean isFirstRun = true;
     ApiService apiService;
     private ProgressDialog progressDialog;
     private File file;
@@ -54,10 +53,11 @@ public class AgreementActivity extends AppCompatActivity {
         file = new File(getExternalFilesDir(null) + File.separator + "agreement.txt");
         progressDialog = new ProgressDialog(this);
         utils = new Utils(this);
-        apiCall();
-        if (!isFirstRun) {
+
+        if (!getFirstBool()) {
             startDashboard();
         }
+        apiCall();
 
 
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -67,8 +67,8 @@ public class AgreementActivity extends AppCompatActivity {
                 goAheadText.setTextColor(getResources().getColor(R.color.white));
 
                 goAheadText.setOnClickListener(v -> {
+                    saveFirstBool(false);
                     startDashboard();
-                    isFirstRun = false;
                 });
             } else {
                 goAheadText.setEnabled(false);
@@ -207,6 +207,19 @@ public class AgreementActivity extends AppCompatActivity {
     private String getPrefData() {
         SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREF, MODE_PRIVATE);
         return prefs.getString(Constants.AGREEMENT, null);
+
+
+    }
+
+    private void saveFirstBool(boolean b) {
+        SharedPreferences.Editor editor = getSharedPreferences(Constants.SHARED_PREF, MODE_PRIVATE).edit();
+        editor.putBoolean("bool", b);
+        editor.apply();
+    }
+
+    private boolean getFirstBool() {
+        SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREF, MODE_PRIVATE);
+        return prefs.getBoolean("bool", true);
 
 
     }

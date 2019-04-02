@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">कोपिला</string>
+    <string name="app_name">दौघा</string>
     <string name="acceptance_text"> यसबाट  प्राप्त सूचना तथा जानकारी अनाधिकिरित रुपमा प्रयोग गर्न मनाही छ | यदि प्रयोग गरेको पाईएमा  प्रचलित कानुन बमोजिम कारबाही गरिनेछ | </string>
     <string name="agree_text">माथिको  सर्त संग मा पूर्ण रुपमा सहमत छु । </string>
     <string name="go_ahead">अगाडी जानुहोस </string>
@@ -7,7 +7,7 @@
     <string name="title_text">गुल्मी-दौघेली  समाज  काठमाडौँ, स्था: २०७०  </string>
     <string name="slogan_text">समग्र दौघाको आर्थिक, सामाजिक, संस्कृतिक,शैक्षिक, खेलकुद ,पर्यटकिय तथा एतिहासिक, बिशिस्टयताको सर्रक्षन तथा पर्बदनको लागि दौघली समाज ।  </string>
     <string name="hamro_barema">हाम्रो बारेमा</string>
-    <string name="name">नाम</string>
+    <string name="name">नाम :</string>
     <string name="name_value">चन्द्र सर्तुङे</string>
     <string name="address">thegana</string>
     <string name="address_value">गुल्मी </string>

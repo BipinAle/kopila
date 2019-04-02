@@ -1,7 +1,9 @@
 package com.mobile.kopila.adapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,12 +20,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PhoneDiaryAdapter extends RecyclerView.Adapter<PhoneDiaryAdapter.ToleViewHolder> {
+    private final int[] colors;
+    private Context context;
     private ArrayList<List<PhoneDiary>> phoneDiariesList;
     private ArrayList<String> toleNamelist;
 
-    public PhoneDiaryAdapter() {
+    public PhoneDiaryAdapter(Context context) {
+        this.context = context;
         toleNamelist = new ArrayList<>();
         phoneDiariesList = new ArrayList<>();
+        colors = context.getResources().getIntArray(R.array.cardcolor);
     }
 
     @NonNull
@@ -41,6 +47,7 @@ public class PhoneDiaryAdapter extends RecyclerView.Adapter<PhoneDiaryAdapter.To
             intent.putExtra("phoneDiaries", Parcels.wrap(phoneDiariesList.get(i)));
             viewHolder.itemView.getContext().startActivity(intent);
         });
+        viewHolder.cardView.setCardBackgroundColor(colors[(int) Math.floor((Math.random() * ((1000 - 10) + 1) + 10) % colors.length)]);
 
 
     }
@@ -59,10 +66,12 @@ public class PhoneDiaryAdapter extends RecyclerView.Adapter<PhoneDiaryAdapter.To
 
     public class ToleViewHolder extends RecyclerView.ViewHolder {
         TextView toleName;
+        CardView cardView;
 
         public ToleViewHolder(@NonNull View itemView) {
             super(itemView);
             toleName = itemView.findViewById(R.id.tole_name);
+            cardView = itemView.findViewById(R.id.card_view);
         }
 
     }

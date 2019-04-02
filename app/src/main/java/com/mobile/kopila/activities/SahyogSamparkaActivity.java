@@ -73,11 +73,15 @@ public class SahyogSamparkaActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         gson = new Gson();
         utils = new Utils(this);
-        adapter = new PhoneDiaryAdapter();
+        adapter = new PhoneDiaryAdapter(this);
         toleRv.setLayoutManager(new GridLayoutManager(this, 2));
         toleRv.setAdapter(adapter);
         phoneDiaries = new ArrayList<>();
         phoneDiaryPref = new ArrayList<>();
+
+        update.setOnClickListener(v -> {
+            apiCall();
+        });
         apiCall();
 
 
