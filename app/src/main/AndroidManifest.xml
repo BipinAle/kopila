@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mobile.kopila">
-
-    <uses-permission android:name="android.permission.INTERNET" />
+     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
@@ -17,7 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.MapActivity"></activity>
-        <activity android:name=".activities.SahyogSamparkaAtivity" />
         <activity android:name=".activities.PhotoGalleryActivity" />
         <activity android:name=".activities.JankariSuchanaActivity" />
         <activity android:name=".activities.PhoneDiaryActivity" />
@@ -25,7 +23,9 @@
         <activity android:name=".activities.HamroBaremaActivity" />
         <activity android:name=".activities.DashboardActivity" />
         <activity android:name=".activities.PersonListActivity" />
+        <activity android:name=".activities.SahyogSamparkaActivity" />
         <activity android:name=".activities.AgreementActivity">
+
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

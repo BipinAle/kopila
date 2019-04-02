@@ -4,9 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.SahyogSamparkaAtivity">
-
+>
     <include layout="@layout/top_bar" />
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/sahyog_samparka_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

@@ -11,13 +11,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mobile.kopila.R;
 import com.mobile.kopila.adapter.PersonListAdapter;
+import com.mobile.kopila.pojo.PhoneDiary;
+
+import org.parceler.Parcels;
+
+import java.util.ArrayList;
 
 public class PersonListActivity extends AppCompatActivity implements PersonListAdapter.OnMessageCallListner {
     private PersonListAdapter adapter;
@@ -25,26 +29,27 @@ public class PersonListActivity extends AppCompatActivity implements PersonListA
     private String phnum;
     private ImageView back;
     private TextView title;
+    ArrayList<PhoneDiary> phoneDiaries = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person_list);
         personListRv = findViewById(R.id.person_list_rv);
-        adapter = new PersonListAdapter();
+        phoneDiaries = new ArrayList<>();
+        adapter = new PersonListAdapter(this);
         adapter.setOnMessageCallListner(this);
         personListRv.setLayoutManager(new LinearLayoutManager(this));
         personListRv.setAdapter(adapter);
 
         back = findViewById(R.id.back);
         title = findViewById(R.id.title);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PersonListActivity.this.finish();
-            }
-        });
+        back.setOnClickListener(v -> PersonListActivity.this.finish());
+        if (getIntent() != null) {
+            phoneDiaries = Parcels.unwrap(getIntent().getParcelableExtra("phoneDiaries"));
+            adapter.update(phoneDiaries);
 
+        }
         title.setText(getString(R.string.phone_diary));
     }
 

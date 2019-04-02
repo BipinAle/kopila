@@ -3,12 +3,15 @@ package com.mobile.kopila.adapter;
 import android.content.Context;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.mobile.kopila.R;
+import com.mobile.kopila.pojo.PhotoGallery;
+import com.mobile.kopila.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -16,15 +19,17 @@ import java.util.ArrayList;
 public class SlidingImageAdapter extends PagerAdapter {
 
 
-    private ArrayList<Integer> IMAGES;
+    private ArrayList<PhotoGallery> images;
     private LayoutInflater inflater;
     private Context context;
 
+    private Utils utils;
 
-    public SlidingImageAdapter(Context context, ArrayList<Integer> IMAGES) {
+    public SlidingImageAdapter(Context context, ArrayList<PhotoGallery> images) {
         this.context = context;
-        this.IMAGES = IMAGES;
+        this.images = images;
         inflater = LayoutInflater.from(context);
+        utils = new Utils((AppCompatActivity) context);
     }
 
     @Override
@@ -34,7 +39,7 @@ public class SlidingImageAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return IMAGES.size();
+        return images.size();
     }
 
     @Override
@@ -45,8 +50,7 @@ public class SlidingImageAdapter extends PagerAdapter {
         final ImageView imageView = imageLayout
                 .findViewById(R.id.image);
 
-
-        imageView.setImageResource(IMAGES.get(position));
+        utils.setImage(images.get(position).getImageId(), imageView);
 
         view.addView(imageLayout, 0);
 

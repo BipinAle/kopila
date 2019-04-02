@@ -3,9 +3,9 @@ package com.mobile.kopila.activities;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,13 +14,12 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mobile.kopila.R;
-import com.mobile.kopila.adapter.SlidingImageAdapter;
+import com.mobile.kopila.adapter.PhoneDiaryAdapter;
 import com.mobile.kopila.network.ApiService;
 import com.mobile.kopila.network.RetrofitApiClient;
-import com.mobile.kopila.pojo.PhotoGallery;
+import com.mobile.kopila.pojo.PhoneDiary;
 import com.mobile.kopila.utils.Constants;
 import com.mobile.kopila.utils.Utils;
-import com.viewpagerindicator.CirclePageIndicator;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,48 +31,53 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.HashMap;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PhotoGalleryActivity extends AppCompatActivity {
-    private static ViewPager mPager;
-    private static int currentPage = 0;
-    private static int NUM_PAGES = 0;
+public class SahyogSamparkaActivity extends AppCompatActivity {
     private ImageView back;
-    private ArrayList<PhotoGallery> photoGalleryList, photGalleryPrefList;
-
+    private RecyclerView toleRv;
+    private PhoneDiaryAdapter adapter;
     private TextView title, update;
     ApiService apiService;
+    private ArrayList<PhoneDiary> phoneDiaries, phoneDiaryPref;
+
     private ProgressDialog progressDialog;
     private Gson gson;
     private File file;
     private Utils utils;
+    HashMap<String, List<PhoneDiary>> phoneDiariesHashMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_photo_gallery);
+        setContentView(R.layout.activity_phone_diary);
+        toleRv = findViewById(R.id.tole_rv);
+
         back = findViewById(R.id.back);
         title = findViewById(R.id.title);
-        back.setOnClickListener(v -> PhotoGalleryActivity.this.finish());
+        back.setOnClickListener(v -> SahyogSamparkaActivity.this.finish());
 
-        title.setText(getString(R.string.photo_gallery));
+        title.setText(getString(R.string.sahayog_samparka));
         update = findViewById(R.id.update);
         update.setVisibility(View.VISIBLE);
-        mPager = findViewById(R.id.pager);
         apiService = new RetrofitApiClient(this).getAdapter().create(ApiService.class);
-        file = new File(getExternalFilesDir(null) + File.separator + "photo_gallery.txt");
+        file = new File(getExternalFilesDir(null) + File.separator + "sahyog_samparka.txt");
         progressDialog = new ProgressDialog(this);
         gson = new Gson();
         utils = new Utils(this);
-        photoGalleryList = new ArrayList<>();
-        photGalleryPrefList = new ArrayList<>();
+        adapter = new PhoneDiaryAdapter();
+        toleRv.setLayoutManager(new GridLayoutManager(this, 2));
+        toleRv.setAdapter(adapter);
+        phoneDiaries = new ArrayList<>();
+        phoneDiaryPref = new ArrayList<>();
         apiCall();
+
 
     }
 
@@ -81,12 +85,12 @@ public class PhotoGalleryActivity extends AppCompatActivity {
         if (utils.isNetworkConnected()) {
             progressDialog.show();
             progressDialog.setMessage(getString(R.string.please_wait));
-            getApiData(file, Constants.PHOTO_GALLERY_GID);
+            getApiData(file, Constants.SAHAYOG_SAMPARKA_GID);
         } else {
-            photGalleryPrefList = getPrefData();
-            if (photGalleryPrefList != null && photGalleryPrefList.size() > 0) {
-                Toast.makeText(PhotoGalleryActivity.this, "success retrieve", Toast.LENGTH_SHORT).show();
-                photoGalleryList = photGalleryPrefList;
+            phoneDiaryPref = getPrefData();
+            if (phoneDiaryPref != null && phoneDiaryPref.size() > 0) {
+                Toast.makeText(SahyogSamparkaActivity.this, "success retrieve", Toast.LENGTH_SHORT).show();
+                phoneDiaries = phoneDiaryPref;
             } else {
                 Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
 
@@ -111,16 +115,14 @@ public class PhotoGalleryActivity extends AppCompatActivity {
                                     String line;
                                     while ((line = br.readLine()) != null) {
                                         String[] colums = line.split(",");
-                                        photoGalleryList.add(new PhotoGallery(colums[0]));
-
+                                        phoneDiaries.add(new PhoneDiary(colums[0], colums[1], colums[2], colums[3], colums[4]));
                                     }
-                                    saveData(photoGalleryList);//save data in pref
-                                    if (photoGalleryList.size() > 0)
-                                        init();
-
+                                    saveData(phoneDiaries);//save data in pref
+//                                    if (phoneDiaries.size() > 0)
+//                                        adapter.updateData(groupByName(phoneDiaries));
 
                                 } catch (FileNotFoundException e) {
-                                    getApiData(file, Constants.PHOTO_GALLERY_GID);
+                                    getApiData(file, Constants.SAHAYOG_SAMPARKA_GID);
                                     e.printStackTrace();
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -135,12 +137,12 @@ public class PhotoGalleryActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         progressDialog.hide();
-                        photGalleryPrefList = getPrefData();
-                        if (photGalleryPrefList != null && photGalleryPrefList.size() > 0) {
-                            Toast.makeText(PhotoGalleryActivity.this, "success retrieve", Toast.LENGTH_SHORT).show();
-                            photoGalleryList = photGalleryPrefList;
+                        phoneDiaryPref = getPrefData();
+                        if (phoneDiaryPref != null && phoneDiaryPref.size() > 0) {
+                            Toast.makeText(SahyogSamparkaActivity.this, "success retrieve", Toast.LENGTH_SHORT).show();
+                            phoneDiaries = phoneDiaryPref;
                         } else {
-                            Toast.makeText(PhotoGalleryActivity.this, getString(R.string.sth_went_wrong), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SahyogSamparkaActivity.this, getString(R.string.sth_went_wrong), Toast.LENGTH_SHORT).show();
 
                         }
 
@@ -148,17 +150,17 @@ public class PhotoGalleryActivity extends AppCompatActivity {
                 });
     }
 
-    private void saveData(ArrayList<PhotoGallery> toleData) {
+    private void saveData(ArrayList<PhoneDiary> toleData) {
         String json = gson.toJson(toleData);
         SharedPreferences.Editor editor = getSharedPreferences(Constants.SHARED_PREF, MODE_PRIVATE).edit();
-        editor.putString(Constants.PHOTO_GALLERY, json);
+        editor.putString(Constants.SAHAYOG_SAMPARKA, json);
         editor.apply();
     }
 
-    private ArrayList<PhotoGallery> getPrefData() {
+    private ArrayList<PhoneDiary> getPrefData() {
         SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREF, MODE_PRIVATE);
-        String mainDataString = prefs.getString(Constants.PHOTO_GALLERY, null);
-        Type type = new TypeToken<ArrayList<PhotoGallery>>() {
+        String mainDataString = prefs.getString(Constants.SAHAYOG_SAMPARKA, null);
+        Type type = new TypeToken<ArrayList<PhoneDiary>>() {
         }.getType();
         return gson.fromJson(mainDataString, type);
 
@@ -210,64 +212,27 @@ public class PhotoGalleryActivity extends AppCompatActivity {
         } catch (IOException e) {
             return false;
         }
+
     }
 
-    private void init() {
+    private HashMap<String, List<PhoneDiary>> groupByName(ArrayList<PhoneDiary> phoneDiaries) {
 
-        if (photoGalleryList.size() > 0) {
-            mPager.setAdapter(new SlidingImageAdapter(this, photoGalleryList));
+        for (PhoneDiary phoneDiary : phoneDiaries) {
+            String key = phoneDiary.getWardName();
+            if (phoneDiariesHashMap.containsKey(key)) {
+                List<PhoneDiary> list = phoneDiariesHashMap.get(key);
+                assert list != null;
+                list.add(phoneDiary);
 
+            } else {
+                List<PhoneDiary> list = new ArrayList<>();
+                list.add(phoneDiary);
+                phoneDiariesHashMap.put(key, list);
+            }
 
-            CirclePageIndicator indicator = findViewById(R.id.indicator);
-
-            indicator.setViewPager(mPager);
-
-            final float density = getResources().getDisplayMetrics().density;
-
-//Set circle indicator radius
-            indicator.setRadius(5 * density);
-
-            NUM_PAGES = photGalleryPrefList.size();
-
-            // Auto start of viewpager
-            final Handler handler = new Handler();
-            final Runnable Update = new Runnable() {
-                public void run() {
-                    if (currentPage == NUM_PAGES) {
-                        currentPage = 0;
-                    }
-                    mPager.setCurrentItem(currentPage++, true);
-                }
-            };
-            Timer swipeTimer = new Timer();
-            swipeTimer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    handler.post(Update);
-                }
-            }, 3000, 3000);
-
-            // Pager listener over indicator
-            indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-                @Override
-                public void onPageSelected(int position) {
-                    currentPage = position;
-
-                }
-
-                @Override
-                public void onPageScrolled(int pos, float arg1, int arg2) {
-
-                }
-
-                @Override
-                public void onPageScrollStateChanged(int pos) {
-
-                }
-            });
         }
 
-
+        return phoneDiariesHashMap;
     }
+
 }

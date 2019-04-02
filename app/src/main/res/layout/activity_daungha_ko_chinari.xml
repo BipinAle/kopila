@@ -3,8 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activities.DaunghaKoChinari">
 
     <include layout="@layout/top_bar" />
+
+    <TextView
+        android:id="@+id/daungha_ko_chinari_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="this is text"
+        android:textColor="@color/black" />
 
 </LinearLayout>
