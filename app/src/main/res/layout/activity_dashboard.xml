@@ -95,7 +95,8 @@
                             android:layout_centerVertical="true"
                             android:layout_marginTop="12dp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/gallery_icon" />
+                            android:src="@drawable/aboutus"
+                            android:tint="@color/white" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -167,7 +168,8 @@
                             android:layout_centerVertical="true"
                             android:layout_marginTop="12dp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/gallery_icon" />
+                            android:src="@drawable/phone_book"
+                            android:tint="@color/white" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -208,9 +210,11 @@
                             android:layout_alignParentTop="true"
                             android:layout_centerInParent="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="8dp"
+                            android:padding="8dp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/gallery_icon" />
+                            android:src="@drawable/info_icon"
+                            android:tint="@color/white" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -281,7 +285,8 @@
                             android:layout_centerVertical="true"
                             android:layout_marginTop="12dp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/gallery_icon" />
+                            android:src="@drawable/sahyog"
+                            android:tint="@color/white" />
 
                         <TextView
                             android:layout_width="match_parent"

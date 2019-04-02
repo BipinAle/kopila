@@ -20,7 +20,7 @@
     <string name="map">नक्सा</string>
     <string name="homepage">गृह पृष्ठ</string>
     <string name="samparkaNo">सम्पर्क नं :</string>
-    <string name="no_internet">इन्टरनेट जडान छैन ।कृपया अप्डेट थिच्नुहोस्</string>
+    <string name="no_internet">इन्टरनेट जडान छैन ।</string>
     <string name="update">अप्डेट</string>
     <string name="please_wait">कृपया पर्खनुहोस्...</string>
     <string name="sth_went_wrong">केहि गलत भयो</string>
