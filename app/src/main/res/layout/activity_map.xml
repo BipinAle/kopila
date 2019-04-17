@@ -7,6 +7,7 @@
     tools:context=".activities.MapActivity">
 
     <include
+        android:id="@+id/top_bar"
         layout="@layout/top_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp" />
@@ -14,7 +15,8 @@
     <ImageView
         android:id="@+id/map"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/top_bar"
         android:layout_centerInParent="true"
         android:layout_gravity="center_vertical"
         android:adjustViewBounds="true" />

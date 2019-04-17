@@ -4,12 +4,17 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.mobile.kopila.R;
+import com.mobile.kopila.adapter.HamroBaremaChinariAdapter;
 import com.mobile.kopila.network.ApiService;
 import com.mobile.kopila.network.RetrofitApiClient;
 import com.mobile.kopila.utils.Constants;
@@ -23,6 +28,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -31,13 +38,16 @@ import retrofit2.Response;
 
 public class DaunghaKoChinari extends AppCompatActivity {
     private ImageView back;
-    private TextView title, update, daunghaKoChinariText;
+    private TextView title, update;
     ApiService apiService;
     private ProgressDialog progressDialog;
+    private Gson gson;
+    HamroBaremaChinariAdapter adapter;
+    RecyclerView daunghaKoChinariRv;
     private File file;
     private Utils utils;
-    private String daunghaKoChinariPref;
-    private String daunghaKoChinari;
+    private ArrayList<String> daunghaKoChinariPref;
+    private ArrayList<String> daunghaKoChinari;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +55,12 @@ public class DaunghaKoChinari extends AppCompatActivity {
         setContentView(R.layout.activity_daungha_ko_chinari);
         back = findViewById(R.id.back);
         title = findViewById(R.id.title);
+        daunghaKoChinariRv = findViewById(R.id.daungha_ko_chinari_rv);
+        gson = new Gson();
+        adapter = new HamroBaremaChinariAdapter();
+        daunghaKoChinariRv.setLayoutManager(new LinearLayoutManager(this));
+        daunghaKoChinariRv.setAdapter(adapter);
         back.setOnClickListener(v -> DaunghaKoChinari.this.finish());
-        daunghaKoChinariText = findViewById(R.id.daungha_ko_chinari_text);
         update = findViewById(R.id.update);
         update.setVisibility(View.VISIBLE);
         apiService = new RetrofitApiClient(this).getAdapter().create(ApiService.class);
@@ -71,7 +85,7 @@ public class DaunghaKoChinari extends AppCompatActivity {
             daunghaKoChinariPref = getPrefData();
             if (daunghaKoChinariPref != null && !daunghaKoChinariPref.isEmpty()) {
                 daunghaKoChinari = daunghaKoChinariPref;
-                daunghaKoChinariText.setText(daunghaKoChinari);
+                adapter.update(daunghaKoChinari);
             } else {
                 Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
 
@@ -96,11 +110,10 @@ public class DaunghaKoChinari extends AppCompatActivity {
                                     String line;
                                     while ((line = br.readLine()) != null) {
                                         String[] colums = line.split(",");
-                                        daunghaKoChinari = colums[0];
+                                        daunghaKoChinari.add(colums[0]);
                                     }
                                     saveData(daunghaKoChinari);//save data in pref
-                                    daunghaKoChinariText.setText(daunghaKoChinari);
-
+                                    adapter.update(daunghaKoChinari);
 
                                 } catch (FileNotFoundException e) {
                                     getApiData(file, Constants.DAUNGHA_KO_CHINARI_GID);
@@ -120,8 +133,8 @@ public class DaunghaKoChinari extends AppCompatActivity {
                         progressDialog.hide();
                         daunghaKoChinariPref = getPrefData();
                         if (daunghaKoChinariPref != null && !daunghaKoChinariPref.isEmpty()) {
-                            Toast.makeText(DaunghaKoChinari.this, "success retrieve", Toast.LENGTH_SHORT).show();
                             daunghaKoChinari = daunghaKoChinariPref;
+                            adapter.update(daunghaKoChinari);
                         } else {
                             Toast.makeText(DaunghaKoChinari.this, getString(R.string.sth_went_wrong), Toast.LENGTH_SHORT).show();
 
@@ -178,16 +191,20 @@ public class DaunghaKoChinari extends AppCompatActivity {
         }
     }
 
-    private void saveData(String hamroBarema) {
+
+    private void saveData(ArrayList<String> daunghaKoChinari) {
+        String json = gson.toJson(daunghaKoChinari);
         SharedPreferences.Editor editor = getSharedPreferences(Constants.SHARED_PREF, MODE_PRIVATE).edit();
-        editor.putString(Constants.DAUNGHA_KO_CHINARI, hamroBarema);
+        editor.putString(Constants.DAUNGHA_KO_CHINARI, json);
         editor.apply();
+
     }
 
-    private String getPrefData() {
+    private ArrayList<String> getPrefData() {
         SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREF, MODE_PRIVATE);
-        return prefs.getString(Constants.DAUNGHA_KO_CHINARI, null);
-
-
+        String mainDataString = prefs.getString(Constants.DAUNGHA_KO_CHINARI, null);
+        Type type = new TypeToken<ArrayList<String>>() {
+        }.getType();
+        return gson.fromJson(mainDataString, type);
     }
 }

@@ -6,19 +6,10 @@
 
     <include layout="@layout/top_bar" />
 
-    <ScrollView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/hamroBaremRv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/hamro_barema_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="12dp"
-             android:textColor="@color/black"
-            android:textFontWeight="500"
-            android:textSize="18dp" />
-    </ScrollView>
+        android:layout_height="wrap_content" />
 
 
 </LinearLayout>

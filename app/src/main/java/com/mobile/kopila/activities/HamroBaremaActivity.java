@@ -4,12 +4,17 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.mobile.kopila.R;
+import com.mobile.kopila.adapter.HamroBaremaChinariAdapter;
 import com.mobile.kopila.network.ApiService;
 import com.mobile.kopila.network.RetrofitApiClient;
 import com.mobile.kopila.utils.Constants;
@@ -23,6 +28,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -31,23 +38,31 @@ import retrofit2.Response;
 
 public class HamroBaremaActivity extends AppCompatActivity {
     private ImageView back;
-    private TextView title, update, hamroBaremaTv;
+    private TextView title, update;
+    private RecyclerView hamroBaremaRv;
     ApiService apiService;
     private ProgressDialog progressDialog;
     private File file;
+    private Gson gson;
     private Utils utils;
-    private String harmroBaremaPref;
-    private String harmroBarema;
+    private ArrayList<String> hamroBaremaList;
+    private ArrayList<String> harmroBaremaPref;
+    private HamroBaremaChinariAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hamro_barema);
+        hamroBaremaRv = findViewById(R.id.hamroBaremRv);
+        hamroBaremaList = new ArrayList<>();
+        gson = new Gson();
         back = findViewById(R.id.back);
         title = findViewById(R.id.title);
+        adapter = new HamroBaremaChinariAdapter();
+        hamroBaremaRv.setLayoutManager(new LinearLayoutManager(this));
+        hamroBaremaRv.setAdapter(adapter);
         back.setOnClickListener(v -> HamroBaremaActivity.this.finish());
         title.setText(getString(R.string.hamro_barema));
-        hamroBaremaTv = findViewById(R.id.hamro_barema_text);
         update = findViewById(R.id.update);
         update.setVisibility(View.VISIBLE);
         apiService = new RetrofitApiClient(this).getAdapter().create(ApiService.class);
@@ -68,8 +83,9 @@ public class HamroBaremaActivity extends AppCompatActivity {
         } else {
             harmroBaremaPref = getPrefData();
             if (harmroBaremaPref != null && !harmroBaremaPref.isEmpty()) {
-                harmroBarema = harmroBaremaPref;
-                hamroBaremaTv.setText(harmroBarema);
+                hamroBaremaList.clear();
+                hamroBaremaList = harmroBaremaPref;
+                adapter.update(hamroBaremaList);
             } else {
                 Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
 
@@ -94,10 +110,10 @@ public class HamroBaremaActivity extends AppCompatActivity {
                                     String line;
                                     while ((line = br.readLine()) != null) {
                                         String[] colums = line.split(",");
-                                        harmroBarema = colums[0];
+                                        hamroBaremaList.add(colums[0]);
                                     }
-                                    saveData(harmroBarema);//save data in pref
-                                    hamroBaremaTv.setText(harmroBarema);
+                                    saveData(hamroBaremaList);//save data in pref
+                                    adapter.update(hamroBaremaList);
 
                                 } catch (FileNotFoundException e) {
                                     getApiData(file, Constants.HAMROBAREMA_GID);
@@ -117,8 +133,7 @@ public class HamroBaremaActivity extends AppCompatActivity {
                         progressDialog.hide();
                         harmroBaremaPref = getPrefData();
                         if (harmroBaremaPref != null && !harmroBaremaPref.isEmpty()) {
-                            Toast.makeText(HamroBaremaActivity.this, "success retrieve", Toast.LENGTH_SHORT).show();
-                            harmroBarema = harmroBaremaPref;
+                            adapter.update(harmroBaremaPref);
                         } else {
                             Toast.makeText(HamroBaremaActivity.this, getString(R.string.sth_went_wrong), Toast.LENGTH_SHORT).show();
 
@@ -175,16 +190,19 @@ public class HamroBaremaActivity extends AppCompatActivity {
         }
     }
 
-    private void saveData(String hamroBarema) {
+    private void saveData(ArrayList<String> hamroBarema) {
+        String json = gson.toJson(hamroBarema);
         SharedPreferences.Editor editor = getSharedPreferences(Constants.SHARED_PREF, MODE_PRIVATE).edit();
-        editor.putString(Constants.HAMRO_BAREMA, hamroBarema);
+        editor.putString(Constants.HAMRO_BAREMA, json);
         editor.apply();
+
     }
 
-    private String getPrefData() {
+    private ArrayList<String> getPrefData() {
         SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREF, MODE_PRIVATE);
-        return prefs.getString(Constants.HAMRO_BAREMA, null);
-
-
+        String mainDataString = prefs.getString(Constants.HAMRO_BAREMA, null);
+        Type type = new TypeToken<ArrayList<String>>() {
+        }.getType();
+        return gson.fromJson(mainDataString, type);
     }
 }
