@@ -36,7 +36,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HamroBaremaActivity extends AppCompatActivity {
+public class LekhharuActivity extends AppCompatActivity {
     private ImageView back;
     private TextView title, update;
     private RecyclerView hamroBaremaRv;
@@ -45,8 +45,8 @@ public class HamroBaremaActivity extends AppCompatActivity {
     private File file;
     private Gson gson;
     private Utils utils;
-    private ArrayList<String> hamroBaremaList;
-    private ArrayList<String> harmroBaremaPref;
+    private ArrayList<String> lekhHaruList;
+    private ArrayList<String> lekhHaruPrefList;
     private CommonAdapter adapter;
 
     @Override
@@ -54,19 +54,19 @@ public class HamroBaremaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hamro_barema);
         hamroBaremaRv = findViewById(R.id.hamroBaremRv);
-        hamroBaremaList = new ArrayList<>();
+        lekhHaruList = new ArrayList<>();
         gson = new Gson();
         back = findViewById(R.id.back);
         title = findViewById(R.id.title);
         adapter = new CommonAdapter();
         hamroBaremaRv.setLayoutManager(new LinearLayoutManager(this));
         hamroBaremaRv.setAdapter(adapter);
-        back.setOnClickListener(v -> HamroBaremaActivity.this.finish());
-        title.setText(getString(R.string.hamro_barema));
+        back.setOnClickListener(v -> LekhharuActivity.this.finish());
+        title.setText(getString(R.string.lekhharu));
         update = findViewById(R.id.update);
         update.setVisibility(View.VISIBLE);
         apiService = new RetrofitApiClient(this).getAdapter().create(ApiService.class);
-        file = new File(getExternalFilesDir(null) + File.separator + "hamro_barema.txt");
+        file = new File(getExternalFilesDir(null) + File.separator + "lekhharu.txt");
         progressDialog = new ProgressDialog(this);
         utils = new Utils(this);
         update.setOnClickListener(v -> {
@@ -79,13 +79,13 @@ public class HamroBaremaActivity extends AppCompatActivity {
         if (utils.isNetworkConnected()) {
             progressDialog.show();
             progressDialog.setMessage(getString(R.string.please_wait));
-            getApiData(file, Constants.HAMROBAREMA_GID);
+            getApiData(file, Constants.LEKH_GID);
         } else {
-            harmroBaremaPref = getPrefData();
-            if (harmroBaremaPref != null && !harmroBaremaPref.isEmpty()) {
-                hamroBaremaList.clear();
-                hamroBaremaList = harmroBaremaPref;
-                adapter.update(hamroBaremaList);
+            lekhHaruPrefList = getPrefData();
+            if (lekhHaruPrefList != null && !lekhHaruPrefList.isEmpty()) {
+                lekhHaruList.clear();
+                lekhHaruList = lekhHaruPrefList;
+                adapter.update(lekhHaruList);
             } else {
                 Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
 
@@ -102,7 +102,7 @@ public class HamroBaremaActivity extends AppCompatActivity {
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         progressDialog.hide();
                         if (response.isSuccessful()) {
-                            hamroBaremaList.clear();
+                            lekhHaruList.clear();
                             assert response.body() != null;
                             boolean writtenSuccessfully = writeResponseBodyToDisk(response.body());
                             if (writtenSuccessfully) {
@@ -111,13 +111,13 @@ public class HamroBaremaActivity extends AppCompatActivity {
                                     String line;
                                     while ((line = br.readLine()) != null) {
                                         String[] colums = line.split(",");
-                                        hamroBaremaList.add(colums[0]);
+                                        lekhHaruList.add(colums[0]);
                                     }
-                                    saveData(hamroBaremaList);//save data in pref
-                                    adapter.update(hamroBaremaList);
+                                    saveData(lekhHaruList);//save data in pref
+                                    adapter.update(lekhHaruList);
 
                                 } catch (FileNotFoundException e) {
-                                    getApiData(file, Constants.HAMROBAREMA_GID);
+                                    getApiData(file, Constants.LEKH_GID);
                                     e.printStackTrace();
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -132,12 +132,12 @@ public class HamroBaremaActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         progressDialog.hide();
-                        harmroBaremaPref.clear();
-                        harmroBaremaPref = getPrefData();
-                        if (!harmroBaremaPref.isEmpty()) {
-                            adapter.update(harmroBaremaPref);
+                        lekhHaruPrefList.clear();
+                        lekhHaruPrefList = getPrefData();
+                        if (!lekhHaruPrefList.isEmpty()) {
+                            adapter.update(lekhHaruPrefList);
                         } else {
-                            Toast.makeText(HamroBaremaActivity.this, getString(R.string.sth_went_wrong), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LekhharuActivity.this, getString(R.string.sth_went_wrong), Toast.LENGTH_SHORT).show();
 
                         }
 
@@ -195,14 +195,14 @@ public class HamroBaremaActivity extends AppCompatActivity {
     private void saveData(ArrayList<String> hamroBarema) {
         String json = gson.toJson(hamroBarema);
         SharedPreferences.Editor editor = getSharedPreferences(Constants.SHARED_PREF, MODE_PRIVATE).edit();
-        editor.putString(Constants.HAMRO_BAREMA, json);
+        editor.putString(Constants.LEKH, json);
         editor.apply();
 
     }
 
     private ArrayList<String> getPrefData() {
         SharedPreferences prefs = getSharedPreferences(Constants.SHARED_PREF, MODE_PRIVATE);
-        String mainDataString = prefs.getString(Constants.HAMRO_BAREMA, null);
+        String mainDataString = prefs.getString(Constants.LEKH, null);
         Type type = new TypeToken<ArrayList<String>>() {
         }.getType();
         return gson.fromJson(mainDataString, type);

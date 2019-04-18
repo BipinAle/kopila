@@ -14,6 +14,7 @@
     <color name="color5">#3498db</color>
     <color name="color6">#34495e</color>
     <color name="color7">#1abc9c</color>
+    <color name="color8">#333333</color>
 
     <array name="cardcolor">
         <item>@color/color3</item>

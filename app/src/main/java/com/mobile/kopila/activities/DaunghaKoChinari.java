@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mobile.kopila.R;
-import com.mobile.kopila.adapter.HamroBaremaChinariAdapter;
+import com.mobile.kopila.adapter.CommonAdapter;
 import com.mobile.kopila.network.ApiService;
 import com.mobile.kopila.network.RetrofitApiClient;
 import com.mobile.kopila.utils.Constants;
@@ -42,12 +42,12 @@ public class DaunghaKoChinari extends AppCompatActivity {
     ApiService apiService;
     private ProgressDialog progressDialog;
     private Gson gson;
-    HamroBaremaChinariAdapter adapter;
+    CommonAdapter adapter;
     RecyclerView daunghaKoChinariRv;
     private File file;
     private Utils utils;
-    private ArrayList<String> daunghaKoChinariPref;
-    private ArrayList<String> daunghaKoChinari;
+    private ArrayList<String> daunghaKoChinariPref = new ArrayList<>();
+    private ArrayList<String> daunghaKoChinari = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class DaunghaKoChinari extends AppCompatActivity {
         title = findViewById(R.id.title);
         daunghaKoChinariRv = findViewById(R.id.daungha_ko_chinari_rv);
         gson = new Gson();
-        adapter = new HamroBaremaChinariAdapter();
+        adapter = new CommonAdapter();
         daunghaKoChinariRv.setLayoutManager(new LinearLayoutManager(this));
         daunghaKoChinariRv.setAdapter(adapter);
         back.setOnClickListener(v -> DaunghaKoChinari.this.finish());
@@ -102,6 +102,7 @@ public class DaunghaKoChinari extends AppCompatActivity {
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         progressDialog.hide();
                         if (response.isSuccessful()) {
+                            daunghaKoChinari.clear();
                             assert response.body() != null;
                             boolean writtenSuccessfully = writeResponseBodyToDisk(response.body());
                             if (writtenSuccessfully) {

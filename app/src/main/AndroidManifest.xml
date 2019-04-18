@@ -24,6 +24,7 @@
         <activity android:name=".activities.DashboardActivity" />
         <activity android:name=".activities.PersonListActivity" />
         <activity android:name=".activities.SahyogSamparkaActivity" />
+        <activity android:name=".activities.LekhharuActivity"/>
         <activity android:name=".activities.AgreementActivity">
 
 

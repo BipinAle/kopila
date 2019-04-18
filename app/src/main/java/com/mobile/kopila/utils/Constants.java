@@ -11,6 +11,7 @@ public class Constants {
     public static final String PHOTO_GALLERY = "photo gallery";
     public static final String SAHAYOG_SAMPARKA = "sahayog samparka";
     public static final String NAKSHA = "naksha";
+    public static final String LEKH = "lekh";
 
     public static final String AGREEMENT_GID = "979384947";
     public static final String HAMROBAREMA_GID = "676499527";
@@ -20,5 +21,7 @@ public class Constants {
     public static final String PHOTO_GALLERY_GID = "779910483";
     public static final String SAHAYOG_SAMPARKA_GID = "1748407582";
     public static final String NAKSHA_GID = "351744118";
+    public static final String LEKH_GID = "1604574808";
+
 
 }

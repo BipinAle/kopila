@@ -54,7 +54,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginRight="12dp"
             android:layout_marginBottom="48dp"
-            android:background="#007432"
+            android:background="#024E45"
             android:padding="8dp"
             android:text="@string/go_ahead"
             android:textColor="@color/disable" />

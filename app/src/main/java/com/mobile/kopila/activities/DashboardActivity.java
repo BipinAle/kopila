@@ -14,7 +14,7 @@ import com.mobile.kopila.network.RetrofitApiClient;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    private CardView one, two, three, four, five, six, seven;
+    private CardView one, two, three, four, five, six, seven, eight;
 
     private TextView title;
     ApiService apiService;
@@ -30,6 +30,7 @@ public class DashboardActivity extends AppCompatActivity {
         five = findViewById(R.id.five);
         six = findViewById(R.id.six);
         seven = findViewById(R.id.seven);
+        eight = findViewById(R.id.eight);
         ImageView back = findViewById(R.id.back);
         back.setVisibility(View.INVISIBLE);
         title = findViewById(R.id.title);
@@ -68,6 +69,10 @@ public class DashboardActivity extends AppCompatActivity {
         });
         seven.setOnClickListener(v -> {
             Intent intent = new Intent(DashboardActivity.this, MapActivity.class);
+            startActivity(intent);
+        });
+        eight.setOnClickListener(v -> {
+            Intent intent = new Intent(DashboardActivity.this, LekhharuActivity.class);
             startActivity(intent);
         });
 
